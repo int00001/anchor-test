@@ -2,6 +2,9 @@
 .env
 .anchor
 .DS_Store
+.txt
+.log
+.error
 target
 build
 **/*.rs.bk
