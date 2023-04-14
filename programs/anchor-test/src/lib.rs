@@ -6,7 +6,9 @@ declare_id!("5nW66C8SHfsfUBbsAm9bRcbpn9tLHESjFSaJUTyGrjsF");
 pub mod anchor_test {
     use super::*;
 
-    pub fn say_hello(_ctx: Context<SayHello>) -> Result<()> {
+    pub fn say_hello(ctx: Context<SayHello>) -> Result<()> {
+        let counter = &mut ctx.accounts.counter;
+        counter.count += 1;
         msg!("hi");
         Ok(())
     }
@@ -19,8 +21,13 @@ pub mod anchor_test {
     }
 }
 
+// 1 public key
+// counter account (will mutate)
 #[derive(Accounts)]
-pub struct SayHello {}
+pub struct SayHello<'info> {
+    #[account(mut)]
+    pub counter: Account<'info, Counter>,
+}
 
 #[account]
 pub struct Counter {
